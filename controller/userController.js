@@ -11,7 +11,7 @@ let userController = {
     } catch {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, msg: err });
+        .json({ status: false, msg: err.message });
     }
   },
   readSingle: async (req, res) => {
@@ -23,7 +23,7 @@ let userController = {
     } catch {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, msg: err });
+        .json({ status: false, msg: err.message });
     }
   },
   createUser: async (req, res) => {
@@ -54,7 +54,7 @@ let userController = {
     } catch {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, msg: err });
+        .json({ status: false, msg: err.message });
     }
   },
 
@@ -76,16 +76,30 @@ let userController = {
     } catch {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, msg: err });
+        .json({ status: false, msg: err.message });
     }
   },
   deleteUser: async (req, res) => {
     try {
-      res.json({ res: "delete user" });
+      let id = req.params.id;
+
+      let extUser = await User.findById(id);
+      if (!extUser) {
+        return res
+          .status(StatusCodes.NOT_FOUND)
+          .json({ status: false, msg: "requested user id not found" });
+      }
+
+      //delete
+      await User.findByIdAndDelete({ _id: id });
+
+      res
+        .status(StatusCodes.OK)
+        .json({ status: true, msg: "user info deleted succesfully" });
     } catch {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ status: false, msg: err });
+        .json({ status: false, msg: err.message });
     }
   },
 };
