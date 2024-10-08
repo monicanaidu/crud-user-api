@@ -8,7 +8,7 @@ let userController = {
       res
         .status(StatusCodes.ACCEPTED)
         .json({ status: true, length: data.length, users: data });
-    } catch {
+    } catch (err) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ status: false, msg: err.message });
@@ -20,7 +20,7 @@ let userController = {
 
       let single = await User.findById(id);
       res.status(StatusCodes.OK).json({ user: single });
-    } catch {
+    } catch (err) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ status: false, msg: err.message });
@@ -48,10 +48,10 @@ let userController = {
 
       res.status(StatusCodes.CREATED).json({
         status: true,
-        msg: " user info created successfully",
+        msg: "user info created successfully",
         user: newUser,
       });
-    } catch {
+    } catch (err) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ status: false, msg: err.message });
@@ -73,7 +73,7 @@ let userController = {
       res
         .status(StatusCodes.ACCEPTED)
         .json({ status: true, msg: `user info updated successfully` });
-    } catch {
+    } catch (err) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ status: false, msg: err.message });
@@ -96,7 +96,7 @@ let userController = {
       res
         .status(StatusCodes.OK)
         .json({ status: true, msg: "user info deleted succesfully" });
-    } catch {
+    } catch (err) {
       res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ status: false, msg: err.message });
