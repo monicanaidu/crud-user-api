@@ -1,5 +1,6 @@
 const express = require("express");
 const { StatusCodes } = require("http-status-codes");
+const cors = require("cors");
 
 //cofig settings to access env setting
 require("dotenv").config();
@@ -14,6 +15,7 @@ const app = express();
 //body parse config
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 //index route
 app.get(`/`, (req, res) => {
