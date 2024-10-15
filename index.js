@@ -12,6 +12,9 @@ const PORT = process.env.PORT;
 
 const app = express();
 
+//view as static
+app.use(express.static("view"));
+
 //body parse config
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,8 +22,11 @@ app.use(cors());
 
 //index route
 app.get(`/`, (req, res) => {
-  res.status(StatusCodes.OK).json({ status: true, msg: "crud user api" });
+  res.status(StatusCodes.OK).json({ status: true, msg: `crud user api` });
 });
+
+//connecting the route so "use" not "get"
+app.use(`/`, require("./route/templateRoute"));
 
 //api route
 app.use(`/api/user`, require("./route/userRoute"));
